@@ -2,8 +2,7 @@
 The `pysh-db` image is intended to jump start someone's efforts in using Python (or Bash) with a pre-configured image containing the needed software packages pre-installed installed.
 
 # Contents
-- [`pysh-db` Docker Image](#pysh-db-docker-image)
-	- [Why is this important?](#why-is-this-important)
+- [Why `pysh-db`?](#why-pysh-db)
 - [What is Included in `pysh-db`?](#what-is-included-in-pysh-db)
 	- [Python](#python)
 	- [Alpine (OS)](#alpine-os)
