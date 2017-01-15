@@ -1,5 +1,7 @@
-<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+# `pysh-db` Docker Image
+The `pysh-db` image is intended to jump start someone's efforts in using Python (or Bash) with a pre-configured image containing the needed software packages pre-installed installed.
 
+# Contents
 - [`pysh-db` Docker Image](#pysh-db-docker-image)
 	- [Why is this important?](#why-is-this-important)
 - [What is Included in `pysh-db`?](#what-is-included-in-pysh-db)
@@ -36,13 +38,7 @@
 - [Contributing](#contributing)
 - [References](#references)
 
-<!-- /TOC -->
-
-# `pysh-db` Docker Image
-
-The `pysh-db` image is intended to jump start someone's efforts in using Python (or Bash) with a pre-configured image containing the needed software packages pre-installed installed.
-
-## Why is this important?
+# Why `pysh-db`?
 This can be valuable for individuals or teams who do not have the time or interest setup up their own development environments. Also, they may have limitations around what they can or cannot install on their corporate laptop. It can be tricky to get all the software packages installed and compiled. Leveraging a Docker image that does that for them can help increase velocity by allowing them time to focus on working with data, not system administration activities.
 
 # What is Included in `pysh-db`?
