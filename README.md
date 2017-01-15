@@ -213,12 +213,13 @@ mysql Ver 15.1 Distrib 10.1.20-MariaDB, for Linux (x86_64) using readline 5.1
 Congratulations, you have a working container.
 
 ## Step 3: Getting Your Local Database setup
+If you havea remote database you will be using, then this section will not be relevant. However, if you want to test or build locally and need a working database, then this will help you get started.
 
 ### Postgres and Amazon Aurora (Postgres)
 
-The easiest path is simply to grab the official Postgres image from Docker hub. Take a look at the options: <https://hub.docker.com/_/postgres/>. To get the image, you can run `docker pull postgres`. This will pull the image locally and allow you to run a local Postgres DB.
+The easiest path is simply to grab the official Postgres image is from Docker hub. Take a look at the options: <https://hub.docker.com/_/postgres/>. To get the image, you can run `docker pull postgres`. This will pull the image locally and allow you to run a local Postgres DB.
 
-You can also create your own image if needed. There are some good articles/how-to-guides to follow [here](https://github.com/docker-library/docs/tree/master/postgres) and [here](https://docs.docker.com/engine/examples/postgresql_service/)
+You can also create your own custom image if needed. There are some good articles/how-to-guides to follow [here](https://github.com/docker-library/docs/tree/master/postgres) and [here](https://docs.docker.com/engine/examples/postgresql_service/)
 
 ### MySQL, MariaDB and Amazon Aurora (MySQL)
 
@@ -227,12 +228,12 @@ Due to the various flavors of MySQL, you have a few choices; MySQL or MariaDB. T
 - [Getting Started: Docker MySQL](https://hub.docker.com/_/mysql/)
 - [Getting Started: Docker MariaDB](https://hub.docker.com/_/mariadb/)
 
-Both links provided an overview on how to get your self up and running. To grab the latest image of either database, simply pull them locally:
+Both links provide an overview on how to get your self up and running. To grab the latest image of either database, simply pull them locally:
 
 - `docker pull mariadb`
 - `docker pull mysql`
 
-Here is a detailed guid on setting up a MariaDB environment: [Installing & Using MariaDB](https://mariadb.com/kb/en/mariadb/installing-and-using-mariadb-via-docker/)
+If you are interested in using MariaDB, this is a detailed guid on setting up a MariaDB environment: [Installing & Using MariaDB](https://mariadb.com/kb/en/mariadb/installing-and-using-mariadb-via-docker/)
 
 Curious what the differences between the MySQL and MariaDB are? Read about it [here](https://mariadb.com/kb/en/mariadb/mariadb-vs-mysql-features/) and [here](http://www.admin-magazine.com/Articles/MariaDB-vs.-MySQL).
 
@@ -252,7 +253,11 @@ The `openbridge/pysh-db` container comes with Python `psycopg2` and `postgres-cl
 
 ## Connecting With `psql`
 
-This is an example connection for Redshift. It includes the remote host (`-h`), port (`-p`), username (`-U`) and database name (`-d`). You will be prompted for a password assuming your connection parameters are correct.
+`psql` is an interactive terminal for working with Postgres. If you want some more background on `psql` you can check [this guide]
+(http://postgresguide.com/utilities/psql.html) or [the offical docs](https://www.postgresql.org/docs/current/static/app-psql.html).
+
+
+Below are some example connections for Redshift using `psql`. It includes the remote host (`-h`), port (`-p`), username (`-U`) and database name (`-d`). You will be prompted for a password assuming your connection parameters are correct.
 
 ```bash
 docker run -it openbridge/pysh-db psql -h *****.us-east-1.redshift.amazonaws.com -p 5439 -U username -d mydatabase
@@ -337,6 +342,7 @@ docker run -it openbridge/pysh-db mysql -h 127.0.0.1 -u mysql -e "./sql/myquerie
 ```
 
 # Exporting Data From Your Database
+There may be times that you want to export data from a database. There are a few methods to accomplish this and we will only cover a few possibilities.
 
 ## Export CSV from Redshift via `UNLOAD` and `psql`
 
@@ -351,15 +357,15 @@ We will assume you have a table called `customers` and you want to export it
     "created_at" date DEFAULT NULL,
 ```
 
-Please note that exports from Redshift require a output location on Amazon S3 and that you have the proper permissions to that location
+Please note that exports from Redshift require a output location on Amazon S3 and that you have the proper permissions to that location.
 
-You will want to connect to your database:
+You will want to connect to your database with your AWS credentials:
 
 ```bash
  docker run -it -e AWS_ACCESS_KEY_ID=XXXX -e AWS_SECRET_ACCESS_KEY=XXX openbridge/pysh-db psql -h *****.us-east-1.redshift.amazonaws.com -p 5439 -U username -d mydatabase
 ```
 
-You will notice the that `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` are part of the run command. These reflect the key and secret required for Amazon to store the output from Redshift to a S3 bucket (see below).
+You will notice the that `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` are part of the run command. These reflect the key and secret required for Amazon to store the output from Redshift to a S3 bucket.
 
 At the `psql` command prompt you will want to provide your `UNLOAD` command:
 
@@ -383,7 +389,7 @@ UNLOAD ('
   NULL AS '\\N';
 ```
 
-The will create an export that is broken into 3 parts as shown in the manifest file:
+The will create an export of files that are stored to S3. Based on the size of the export, it was broken into 3 parts as shown in the manifest file:
 
 ```json
 {
@@ -394,17 +400,18 @@ The will create an export that is broken into 3 parts as shown in the manifest f
   ]
 }
 ```
+Each of the files `customer_0000_part_00`, `customer_0001_part_00` and `customer_0002_part_00` reflect the `UNLOAD` command and underlying query used.
 
-Each of the files `customer_0000_part_00`, `customer_0001_part_00` and `customer_0002_part_00` reflect the `UNLOAD` command and underlying query used
+If you want to pull those remote S3 files to your local compute, you can use the included `awscli` tools.
+```bash
+aws s3 cp s3://mybucket/crm /my/local/folder --recursive
+```
 
 Notes:
 
 1. UNLOAD by default creates encrypted files using Amazon S3 server-side encryption with AWS-managed encryption keys (SSE) 2.The S3 bucket specified in the command should be in the same region as your cluster. If they are in different regions, you will most likely see an error
-2. Rather than specify key-based access control by providing the access key ID and the secret access key, you can also use AWS IAM roles:
+2. Rather than specify key-based access control by providing the access key ID and the secret access key, you can also use AWS IAM roles: `CREDENTIALS 'aws_iam_role=arn:aws:iam::<account-id>:role/<role-name>'`
 
-```bash
-CREDENTIALS 'aws_iam_role=arn:aws:iam::<account-id>:role/<role-name>'
-```
 
 ## Export Without Using `UNLOAD` command
 
