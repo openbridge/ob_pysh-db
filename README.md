@@ -1,4 +1,4 @@
-![pysh-db](https://github.com/openbridge/ob_pysh-db/blob/master/images/pysh.png "pysh-db")
+![pysh-db](https://github.com/openbridge/ob_pysh-db/blob/dev/images/pysh.png)
 
 # `pysh-db` Docker Image
 
@@ -8,58 +8,36 @@ The `pysh-db` image is intended to jump start someone's efforts in using Python 
 
 - [Why `pysh-db`?](#why-pysh-db)
 - [What is Included in `pysh-db`?](#what-is-included-in-pysh-db)
-
   - [Python](#python)
   - [Alpine (OS)](#alpine-os)
-
 - [Requirements](#requirements)
-
   - [What is Docker?](#what-is-docker)
   - [Install Docker](#install-docker)
   - [Data and Work File Persistence](#data-and-work-file-persistence)
-
     - [Example: Mounting Host Volume](#example-mounting-host-volume)
-
   - [Creating Your Own Custom Image](#creating-your-own-custom-image)
-
 - [Getting Setup](#getting-setup)
-
   - [Step 1: Building an image](#step-1-building-an-image)
   - [Step2: Running The Container](#step2-running-the-container)
   - [Step 3: Getting Your Local Database setup](#step-3-getting-your-local-database-setup)
-
     - [Postgres and Amazon Aurora (Postgres)](#postgres-and-amazon-aurora-postgres)
     - [MySQL, MariaDB and Amazon Aurora (MySQL)](#mysql-mariadb-and-amazon-aurora-mysql)
-
       - [Amazon Aurora](#amazon-aurora)
-
 - [Connecting to Postgres, Amazon Auroa or Redshift](#connecting-to-postgres-amazon-auroa-or-redshift)
-
   - [Connecting With `psql`](#connecting-with-psql)
-
     - [Example: Listing Schema Tables And Objects](#example-listing-schema-tables-and-objects)
-
   - [Running Queries Via `psql`](#running-queries-via-psql)
-
     - [Standard Input Via `-c`](#standard-input-via-c)
     - [File Input Via `-f`](#file-input-via-f)
-
 - [Connecting to MySQL, MariaDB or Amazon Aurora](#connecting-to-mysql-mariadb-or-amazon-aurora)
-
   - [Connecting With `mysql`](#connecting-with-mysql)
   - [Running Queries Via `mysql`](#running-queries-via-mysql)
-
 - [Exporting Data From Your Database](#exporting-data-from-your-database)
-
   - [Export CSV from Redshift via `UNLOAD` and `psql`](#export-csv-from-redshift-via-unload-and-psql)
   - [Export Without Using `UNLOAD` command](#export-without-using-unload-command)
-
 - [Connecting Python To Your Database](#connecting-python-to-your-database)
-
   - [Example: Basic `psycopg2` Usage](#example-basic-psycopg2-usage)
-
 - [Issues](#issues)
-
 - [Contributing](#contributing)
 - [References](#references)
 
