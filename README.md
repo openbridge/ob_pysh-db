@@ -57,6 +57,7 @@ The `pysh-db` image is intended to jump start someone's efforts in using Python 
   - [Example: Basic `psycopg2` Usage](#example-basic-psycopg2-usage)
 
 - [Issues](#issues)
+
 - [Contributing](#contributing)
 - [References](#references)
 
@@ -174,6 +175,12 @@ Feel free to modify the Dockerfile as deemed appropriate. You can add and subtra
 Once you have Docker running, you can build a Python image and run the container..
 
 ## Step 1: Building an image
+
+The simplest way to get `pysh-db` is to pull from [Docker Hub](https://hub.docker.com/r/openbridge/pysh-db/):
+
+```bash
+docker pull openbridge/pysh-db
+```
 
 If you want to build the image from scratch using the Dockefile, the first step is to grab the Dockerfile locally. Then you can execute the build command:
 
