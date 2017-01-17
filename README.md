@@ -2,42 +2,44 @@
 The `pysh-db` image is intended to jump start someone's efforts in using Python (or Bash) with a pre-configured image containing the needed software packages pre-installed.
 
 # Contents
+
 - [Why `pysh-db`?](#why-pysh-db)
 - [What is Included in `pysh-db`?](#what-is-included-in-pysh-db)
-	- [Python](#python)
-	- [Alpine (OS)](#alpine-os)
+  - [Python](#python)
+  - [Alpine (OS)](#alpine-os)
 - [Requirements](#requirements)
-	- [What is Docker?](#what-is-docker)
-	- [Install Docker](#install-docker)
-	- [Data and Work File Persistence](#data-and-work-file-persistence)
-		- [Example: Mounting Host Volume](#example-mounting-host-volume)
-	- [Creating Your Own Custom Image](#creating-your-own-custom-image)
+  - [What is Docker?](#what-is-docker)
+  - [Install Docker](#install-docker)
+  - [Data and Work File Persistence](#data-and-work-file-persistence)
+    - [Example: Mounting Host Volume](#example-mounting-host-volume)
+  - [Creating Your Own Custom Image](#creating-your-own-custom-image)
 - [Getting Setup](#getting-setup)
-	- [Step 1: Building an image](#step-1-building-an-image)
-	- [Step2: Running The Container](#step2-running-the-container)
-	- [Step 3: Getting Your Local Database setup](#step-3-getting-your-local-database-setup)
-		- [Postgres and Amazon Aurora (Postgres)](#postgres-and-amazon-aurora-postgres)
-		- [MySQL, MariaDB and Amazon Aurora (MySQL)](#mysql-mariadb-and-amazon-aurora-mysql)
-			- [Amazon Aurora](#amazon-aurora)
+  - [Step 1: Building an image](#step-1-building-an-image)
+  - [Step2: Running The Container](#step2-running-the-container)
+  - [Step 3: Getting Your Local Database setup](#step-3-getting-your-local-database-setup)
+    - [Postgres and Amazon Aurora (Postgres)](#postgres-and-amazon-aurora-postgres)
+    - [MySQL, MariaDB and Amazon Aurora (MySQL)](#mysql-mariadb-and-amazon-aurora-mysql)
+      - [Amazon Aurora](#amazon-aurora)
 - [Connecting to Postgres, Amazon Auroa or Redshift](#connecting-to-postgres-amazon-auroa-or-redshift)
-	- [Connecting With `psql`](#connecting-with-psql)
-		- [Example: Listing Schema Tables And Objects](#example-listing-schema-tables-and-objects)
-	- [Running Queries Via `psql`](#running-queries-via-psql)
-		- [Standard Input Via `-c`](#standard-input-via-c)
-		- [File Input Via `-f`](#file-input-via-f)
+  - [Connecting With `psql`](#connecting-with-psql)
+    - [Example: Listing Schema Tables And Objects](#example-listing-schema-tables-and-objects)
+  - [Running Queries Via `psql`](#running-queries-via-psql)
+    - [Standard Input Via `-c`](#standard-input-via-c)
+    - [File Input Via `-f`](#file-input-via-f)
 - [Connecting to MySQL, MariaDB or Amazon Aurora](#connecting-to-mysql-mariadb-or-amazon-aurora)
-	- [Connecting With `mysql`](#connecting-with-mysql)
-	- [Running Queries Via `mysql`](#running-queries-via-mysql)
+  - [Connecting With `mysql`](#connecting-with-mysql)
+  - [Running Queries Via `mysql`](#running-queries-via-mysql)
 - [Exporting Data From Your Database](#exporting-data-from-your-database)
-	- [Export CSV from Redshift via `UNLOAD` and `psql`](#export-csv-from-redshift-via-unload-and-psql)
-	- [Export Without Using `UNLOAD` command](#export-without-using-unload-command)
+  - [Export CSV from Redshift via `UNLOAD` and `psql`](#export-csv-from-redshift-via-unload-and-psql)
+  - [Export Without Using `UNLOAD` command](#export-without-using-unload-command)
 - [Connecting Python To Your Database](#connecting-python-to-your-database)
-	- [Example: Basic `psycopg2` Usage](#example-basic-psycopg2-usage)
+  - [Example: Basic `psycopg2` Usage](#example-basic-psycopg2-usage)
 - [Issues](#issues)
 - [Contributing](#contributing)
 - [References](#references)
 
 # Why `pysh-db`?
+
 This can be valuable for individuals or teams who do not have the time or interest setup up their own development environments. Also, they may have limitations around what they can or cannot install on their corporate laptop. It can be tricky to get all the software packages installed and compiled. Leveraging a Docker image that does that for them can help increase velocity by allowing them time to focus on working with data, not system administration activities.
 
 # What is Included in `pysh-db`?
@@ -151,6 +153,12 @@ Once you have Docker running, you can build a Python image and run the container
 
 ## Step 1: Building an image
 
+The simplest way to get `pysh-db` is to pull from [Docker Hub](https://hub.docker.com/r/openbridge/pysh-db/):
+
+```bash
+docker pull openbridge/pysh-db
+```
+
 If you want to build the image from scratch using the Dockefile, the first step is to grab the Dockerfile locally. Then you can execute the build command:
 
 ```bash
@@ -212,6 +220,7 @@ mysql Ver 15.1 Distrib 10.1.20-MariaDB, for Linux (x86_64) using readline 5.1
 Congratulations, you have a working container.
 
 ## Step 3: Getting Your Local Database setup
+
 If you havea remote database you will be using, then this section will not be relevant. However, if you want to test or build locally and need a working database, then this will help you get started.
 
 ### Postgres and Amazon Aurora (Postgres)
@@ -252,9 +261,7 @@ The `openbridge/pysh-db` container comes with Python `psycopg2` and `postgres-cl
 
 ## Connecting With `psql`
 
-`psql` is an interactive terminal for working with Postgres. If you want some more background on `psql` you can check [this guide]
-(http://postgresguide.com/utilities/psql.html) or [the offical docs](https://www.postgresql.org/docs/current/static/app-psql.html).
-
+`psql` is an interactive terminal for working with Postgres. If you want some more background on `psql` you can check [this guide] (<http://postgresguide.com/utilities/psql.html>) or [the offical docs](https://www.postgresql.org/docs/current/static/app-psql.html).
 
 Below are some example connections for Redshift using `psql`. It includes the remote host (`-h`), port (`-p`), username (`-U`) and database name (`-d`). You will be prompted for a password assuming your connection parameters are correct.
 
@@ -341,6 +348,7 @@ docker run -it openbridge/pysh-db mysql -h 127.0.0.1 -u mysql -e "./sql/myquerie
 ```
 
 # Exporting Data From Your Database
+
 There may be times that you want to export data from a database. There are a few methods to accomplish this and we will only cover a few possibilities.
 
 ## Export CSV from Redshift via `UNLOAD` and `psql`
@@ -388,7 +396,7 @@ UNLOAD ('
   NULL AS '\\N';
 ```
 
-The will create an export of files that are stored to S3. Based on the size of the export, it was broken into 3 parts as shown in the manifest file:
+The will create an export of files that are stored to S3\. Based on the size of the export, it was broken into 3 parts as shown in the manifest file:
 
 ```json
 {
@@ -399,9 +407,11 @@ The will create an export of files that are stored to S3. Based on the size of t
   ]
 }
 ```
+
 Each of the files `customer_0000_part_00`, `customer_0001_part_00` and `customer_0002_part_00` reflect the `UNLOAD` command and underlying query used.
 
 If you want to pull those remote S3 files to your local compute, you can use the included `awscli` tools.
+
 ```bash
 aws s3 cp s3://mybucket/crm /my/local/folder --recursive
 ```
@@ -410,7 +420,6 @@ Notes:
 
 1. UNLOAD by default creates encrypted files using Amazon S3 server-side encryption with AWS-managed encryption keys (SSE) 2.The S3 bucket specified in the command should be in the same region as your cluster. If they are in different regions, you will most likely see an error
 2. Rather than specify key-based access control by providing the access key ID and the secret access key, you can also use AWS IAM roles: `CREDENTIALS 'aws_iam_role=arn:aws:iam::<account-id>:role/<role-name>'`
-
 
 ## Export Without Using `UNLOAD` command
 
