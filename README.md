@@ -1,8 +1,8 @@
 ![pysh-db](https://github.com/openbridge/ob_pysh-db/blob/dev/images/pysh.png)
 
-# `pysh-db` Data Development Docker Image
+# `pysh-db` The Data Science Toolkit (DSK)
 
-The `pysh-db` image is intended to jump start someone's efforts in using Python (or Bash) with a pre-configured image containing the needed software packages pre-installed.
+The `pysh-db` image is intended to jump start someone's efforts in using Python (or Bash) with a pre-configured image containing the needed software packages pre-installed. It contains the most common tools used in Data Science work.
 
 # Why `pysh-db`?
 
