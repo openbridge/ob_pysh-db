@@ -68,6 +68,8 @@ Sometimes you need helper "packages" and "libraries" to perform various operatio
 - awscli
 - boto
 - scipy
+- seaborn
+- statsmodels
 
 Why include these? The two primary reasons for including these packages are;
 
