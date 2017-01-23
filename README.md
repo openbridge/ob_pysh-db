@@ -38,9 +38,7 @@ The `pysh-db` image is intended to jump start someone's efforts in using Python 
 - [Connecting Python To Your Database](#connecting-python-to-your-database)
   - [Example: Basic `psycopg2` Usage](#example-basic-psycopg2-usage)
 - [Issues](#issues)
-
 - [Contributing](#contributing)
-
 - [References](#references)
 
 # Why `pysh-db`?
