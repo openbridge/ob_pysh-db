@@ -38,7 +38,9 @@ The `pysh-db` image is intended to jump start someone's efforts in using Python 
 - [Connecting Python To Your Database](#connecting-python-to-your-database)
   - [Example: Basic `psycopg2` Usage](#example-basic-psycopg2-usage)
 - [Issues](#issues)
+
 - [Contributing](#contributing)
+
 - [References](#references)
 
 # Why `pysh-db`?
@@ -60,7 +62,6 @@ Sometimes you need helper "packages" and "libraries" to perform various operatio
 - numpy
 - matplotlib
 - pandas
-- python
 - dateutil
 - sqlalchemy
 - mysql-connector
@@ -480,7 +481,7 @@ Before you start to code, we recommend discussing your plans through a GitHub is
 # References
 
 - [10 minutes to Pandas](http://pandas.pydata.org/pandas-docs/stable/10min.html#min)
-- [Itroduction to Pandas](http://pandas.pydata.org/pandas-docs/stable/index.html)
+- [Introduction to Pandas](http://pandas.pydata.org/pandas-docs/stable/index.html)
 - [NumPy Basics](https://docs.scipy.org/doc/numpy-dev/user/quickstart.html)
 - [EdX: Introduction to Python for Data Science](https://www.edx.org/course/introduction-python-data-science-microsoft-dat208x-4)
 - [Datacamp: Intro to Python for Data Science](https://www.datacamp.com/courses/intro-to-python-for-data-science)
