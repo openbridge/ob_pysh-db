@@ -1,4 +1,4 @@
-![pysh-db](https://github.com/openbridge/ob_pysh-db/blob/dev/images/pysh.png)
+![pysh-db](https://github.com/openbridge/ob_pysh-db/raw/master/images/pysh.png)
 
 # `pysh-db` The Data Science Toolkit (DSK)
 
@@ -10,36 +10,58 @@ This can be valuable for individuals or teams who do not have the time or intere
 
 # Contents
 - [What is Included in `pysh-db`?](#what-is-included-in-pysh-db)
+
   - [Python](#python)
   - [Alpine (OS)](#alpine-os)
+
 - [Requirements](#requirements)
+
   - [What is Docker?](#what-is-docker)
   - [Install Docker](#install-docker)
   - [Data and Work File Persistence](#data-and-work-file-persistence)
+
     - [Example: Mounting Host Volume](#example-mounting-host-volume)
+
   - [Creating Your Own Custom Image](#creating-your-own-custom-image)
+
 - [Getting Setup](#getting-setup)
+
   - [Step 1: Building an image](#step-1-building-an-image)
   - [Step2: Running The Container](#step2-running-the-container)
   - [Step 3: Getting Your Local Database setup](#step-3-getting-your-local-database-setup)
+
     - [Postgres and Amazon Aurora (Postgres)](#postgres-and-amazon-aurora-postgres)
     - [MySQL, MariaDB and Amazon Aurora (MySQL)](#mysql-mariadb-and-amazon-aurora-mysql)
+
       - [Amazon Aurora](#amazon-aurora)
+
 - [Connecting to Postgres, Amazon Auroa or Redshift](#connecting-to-postgres-amazon-auroa-or-redshift)
+
   - [Connecting With `psql`](#connecting-with-psql)
+
     - [Example: Listing Schema Tables And Objects](#example-listing-schema-tables-and-objects)
+
   - [Running Queries Via `psql`](#running-queries-via-psql)
+
     - [Standard Input Via `-c`](#standard-input-via-c)
     - [File Input Via `-f`](#file-input-via-f)
+
 - [Connecting to MySQL, MariaDB or Amazon Aurora](#connecting-to-mysql-mariadb-or-amazon-aurora)
+
   - [Connecting With `mysql`](#connecting-with-mysql)
   - [Running Queries Via `mysql`](#running-queries-via-mysql)
+
 - [Exporting Data From Your Database](#exporting-data-from-your-database)
+
   - [Export CSV from Redshift via `UNLOAD` and `psql`](#export-csv-from-redshift-via-unload-and-psql)
   - [Export Without Using `UNLOAD` command](#export-without-using-unload-command)
+
 - [Connecting Python To Your Database](#connecting-python-to-your-database)
+
   - [Example: Basic `psycopg2` Usage](#example-basic-psycopg2-usage)
+
 - [Issues](#issues)
+
 - [Contributing](#contributing)
 - [References](#references)
 
@@ -126,7 +148,7 @@ In this example, your python app files are located locally at `/src/app`. So you
 Let's assume you have a `query.py` script you have worked on. The path to that file on the host would be `/src/app/query.py`. By mounting `/src/app` to `/app`, this will make available `query.py` within the container with a path of `/src/app/query.py`. To run `query.py` the docker command would look like:
 
 ```bash
-docker run -it -v /src/app:/app openbridge/pysh-db python /app/query.py
+docker run -it -v /src/app:/app openbridge/ob_pysh-db python /app/query.py
 ```
 
 Per Docker:
@@ -155,16 +177,16 @@ Once you have Docker running, you can build a Python image and run the container
 
 ## Step 1: Building an image
 
-The simplest way to get `pysh-db` is to pull from [Docker Hub](https://hub.docker.com/r/openbridge/pysh-db/):
+The simplest way to get `pysh-db` is to pull from [Docker Hub](https://hub.docker.com/r/openbridge/ob_pysh-db/):
 
 ```bash
-docker pull openbridge/pysh-db
+docker pull openbridge/ob_pysh-db
 ```
 
 If you want to build the image from scratch using the Dockefile, the first step is to grab the Dockerfile locally. Then you can execute the build command:
 
 ```bash
-docker build -t openbridge/pysh-db .
+docker build -t openbridge/ob_pysh-db .
 ```
 
 Due to the Python packages, the build can take awhile. Pandas, Numpy and Scipy take considerable time to build. When you run the `docker build` command, feel free to grab a cup of coffee.
@@ -174,7 +196,7 @@ Due to the Python packages, the build can take awhile. Pandas, Numpy and Scipy t
 Once you have completed building your image, you can run through some basic checks to make sure it is working as expected. For example, you can test if you can start the bash cli:
 
 ```bash
-docker run -it openbridge/pysh-db bash
+docker run -it openbridge/ob_pysh-db bash
 ```
 
 Will result in putting you inside the container at the command prompt like this:
@@ -186,7 +208,7 @@ foo@442343470ad0:/#
 You certainly do not need to enter into the container like that. You can easily run Python "outside" the container. For example, you can run a simple test to have the container echo the current Python version
 
 ```bash
-docker run -it openbridge/pysh-db python -V
+docker run -it openbridge/ob_pysh-db python -V
 ```
 
 Will result in:
@@ -198,7 +220,7 @@ Python 2.7.13
 Not only does this image have Python, it also has the Postgres libraries. For example, you can run PSQL directly at the prompt:
 
 ```bash
-docker run -it openbridge/pysh-db psql -V
+docker run -it openbridge/ob_pysh-db psql -V
 ```
 
 Which will return
@@ -210,7 +232,7 @@ psql (PostgreSQL) 9.5.4
 You can do the same with the `mysql` client:
 
 ```bash
-docker run -it openbridge/pysh-db mysql -V
+docker run -it openbridge/ob_pysh-db mysql -V
 ```
 
 Which will return
@@ -259,7 +281,7 @@ To pull a version, specify it in your pull command: `docker pull mysql:5.6`
 
 # Connecting to Postgres, Amazon Auroa or Redshift
 
-The `openbridge/pysh-db` container comes with Python `psycopg2` and `postgres-client`. For connecting to a Postgres or Redshift with Python, the Psycopg2 package is needed. If you want some background on this package, go [here](https://wiki.postgresql.org/wiki/Psycopg2_Tutorial).
+The `openbridge/ob_pysh-db` container comes with Python `psycopg2` and `postgres-client`. For connecting to a Postgres or Redshift with Python, the Psycopg2 package is needed. If you want some background on this package, go [here](https://wiki.postgresql.org/wiki/Psycopg2_Tutorial).
 
 ## Connecting With `psql`
 
@@ -268,7 +290,7 @@ The `openbridge/pysh-db` container comes with Python `psycopg2` and `postgres-cl
 Below are some example connections for Redshift using `psql`. It includes the remote host (`-h`), port (`-p`), username (`-U`) and database name (`-d`). You will be prompted for a password assuming your connection parameters are correct.
 
 ```bash
-docker run -it openbridge/pysh-db psql -h *****.us-east-1.redshift.amazonaws.com -p 5439 -U username -d mydatabase
+docker run -it openbridge/ob_pysh-db psql -h *****.us-east-1.redshift.amazonaws.com -p 5439 -U username -d mydatabase
 ```
 
 Replace these values with those for your Redshift cluster.
@@ -278,13 +300,13 @@ Replace these values with those for your Redshift cluster.
 You can list all tables in your current schema using just `\d`.
 
 ```bash
-docker run -it openbridge/pysh-db psql -h *****.us-east-1.redshift.amazonaws.com -p 5439 -U username -d mydatabase \d
+docker run -it openbridge/ob_pysh-db psql -h *****.us-east-1.redshift.amazonaws.com -p 5439 -U username -d mydatabase \d
 ```
 
 Specify an additional name and `psql` will tell you details about that named object.
 
 ```bash
-docker run -it openbridge/pysh-db psql -h *****.us-east-1.redshift.amazonaws.com -p 5439 -U username -d mydatabase \d mytablename
+docker run -it openbridge/ob_pysh-db psql -h *****.us-east-1.redshift.amazonaws.com -p 5439 -U username -d mydatabase \d mytablename
 ```
 
 ## Running Queries Via `psql`
@@ -292,7 +314,7 @@ docker run -it openbridge/pysh-db psql -h *****.us-east-1.redshift.amazonaws.com
 ### Standard Input Via `-c`
 
 ```bash
-docker run -it openbridge/pysh-db psql -h *****.us-east-1.redshift.amazonaws.com -p 5439 -U username -d mydatabase -c 'SELECT * FROM mytable'
+docker run -it openbridge/ob_pysh-db psql -h *****.us-east-1.redshift.amazonaws.com -p 5439 -U username -d mydatabase -c 'SELECT * FROM mytable'
 ```
 
 ### File Input Via `-f`
@@ -300,7 +322,7 @@ docker run -it openbridge/pysh-db psql -h *****.us-east-1.redshift.amazonaws.com
 Instead of passing the query via `-c` you can also leverage an external file that contains the query you want to execute:
 
 ```bash
-docker run -it openbridge/pysh-db psql -h *****.us-east-1.redshift.amazonaws.com -p 5439 -U username -d mydatabase -q -f dump.sql
+docker run -it openbridge/ob_pysh-db psql -h *****.us-east-1.redshift.amazonaws.com -p 5439 -U username -d mydatabase -q -f dump.sql
 ```
 
 Uisng `-f` reads commands from a file rather than standard input.
@@ -314,19 +336,19 @@ Uisng `-f` reads commands from a file rather than standard input.
 Using `mysql` is similar to using to `psql`. To see all the available options for `mysql`, simply run:
 
 ```bash
-docker run -it openbridge/pysh-db mysql --help
+docker run -it openbridge/ob_pysh-db mysql --help
 ```
 
 Here is a sample connection statement:
 
 ```bash
-docker run -it openbridge/pysh-db mysql -h 127.0.0.1 -u mysql -D mydatabase -P 3306
+docker run -it openbridge/ob_pysh-db mysql -h 127.0.0.1 -u mysql -D mydatabase -P 3306
 ```
 
 This will show you all the tables in the specified database
 
 ```bash
-docker run -it openbridge/pysh-db mysql -h 127.0.0.1 -u mysql -D mydatabase -P 3306 -e "show tables;"
+docker run -it openbridge/ob_pysh-db mysql -h 127.0.0.1 -u mysql -D mydatabase -P 3306 -e "show tables;"
 ```
 
 ## Running Queries Via `mysql`
@@ -334,7 +356,7 @@ docker run -it openbridge/pysh-db mysql -h 127.0.0.1 -u mysql -D mydatabase -P 3
 Use can run `mysql` command to execute local sql file:
 
 ```bash
-docker run -it openbridge/pysh-db mysql -h 127.0.0.1 -u mysql < "./sql/myqueries.sql"
+docker run -it openbridge/ob_pysh-db mysql -h 127.0.0.1 -u mysql < "./sql/myqueries.sql"
 ```
 
 Here is an example command passing the set of commands via `-e`:
@@ -346,7 +368,7 @@ mysql -h 127.0.0.1 -u mysql -e "use mydatabase; INSERT IGNORE INTO users (id, us
 or
 
 ```bash
-docker run -it openbridge/pysh-db mysql -h 127.0.0.1 -u mysql -e "./sql/myqueries.sql"
+docker run -it openbridge/ob_pysh-db mysql -h 127.0.0.1 -u mysql -e "./sql/myqueries.sql"
 ```
 
 # Exporting Data From Your Database
@@ -371,7 +393,7 @@ Please note that exports from Redshift require a output location on Amazon S3 an
 You will want to connect to your database with your AWS credentials:
 
 ```bash
- docker run -it -e AWS_ACCESS_KEY_ID=XXXX -e AWS_SECRET_ACCESS_KEY=XXX openbridge/pysh-db psql -h *****.us-east-1.redshift.amazonaws.com -p 5439 -U username -d mydatabase
+ docker run -it -e AWS_ACCESS_KEY_ID=XXXX -e AWS_SECRET_ACCESS_KEY=XXX openbridge/ob_pysh-db psql -h *****.us-east-1.redshift.amazonaws.com -p 5439 -U username -d mydatabase
 ```
 
 You will notice the that `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` are part of the run command. These reflect the key and secret required for Amazon to store the output from Redshift to a S3 bucket.
@@ -428,13 +450,13 @@ Notes:
 A Redshift (only) example
 
 ```bash
- docker run -it openbridge/pysh-db psql psql -h *****.eu-west-1.redshift.amazonaws.com -p 5439 -U test -d test -F, -A -c 'select * from  mytable' > mytable.csv
+ docker run -it openbridge/ob_pysh-db psql psql -h *****.eu-west-1.redshift.amazonaws.com -p 5439 -U test -d test -F, -A -c 'select * from  mytable' > mytable.csv
 ```
 
 A Postgres (only) example:
 
 ```bash
- docker run -it openbridge/pysh-db psql -U username -d mydatabase -c "Copy (Select * From mytablename LIMIT 10) To STDOUT With CSV HEADER DELIMITER ',';" > /path/to/store/mytablename.csv
+ docker run -it openbridge/ob_pysh-db psql -U username -d mydatabase -c "Copy (Select * From mytablename LIMIT 10) To STDOUT With CSV HEADER DELIMITER ',';" > /path/to/store/mytablename.csv
 ```
 
 # Connecting Python To Your Database
