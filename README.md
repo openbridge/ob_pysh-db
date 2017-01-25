@@ -2,7 +2,7 @@
 
 # `pysh-db` The Data Science Toolkit (DSK)
 
-The `pysh-db` is intended to jump start someone's efforts in using Python (or Bash). It is a pre-configured Docker image containing the leading Python data science software packages isntalled and ready to run.
+`pysh-db` is intended to jump start someone's efforts in using Python (or Bash). It is a pre-configured Docker image containing the leading Python data science software packages isntalled and ready to run.
 
 # Why `pysh-db`?
 
