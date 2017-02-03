@@ -51,6 +51,7 @@ RUN echo "@community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /et
         mariadb-client \
         mariadb-client-libs \
         python \
+        bash \
         curl \
         less \
         groff \
