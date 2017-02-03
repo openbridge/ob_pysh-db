@@ -2,11 +2,13 @@
 
 # `pysh-db` The Data Science Toolkit (DSK)
 
-The `pysh-db` image is intended to jump start someone's efforts in using Python (or Bash) with a pre-configured image containing the needed software packages pre-installed.
+`pysh-db` is intended to jump start someone's efforts in using Python (or Bash). It is a pre-configured Docker image containing the leading Python data science software packages isntalled and ready to run.
+
+# Why `pysh-db`?
+
+This can be valuable for individuals or teams who do not have the time or interest setup up their own development environments. Also, they may have limitations around what they can or cannot install on their corporate laptop. It can be tricky to get all the software packages installed and compiled. Leveraging a Docker image that does that for them can help increase velocity by allowing them time to focus on working with data, not system administration activities.
 
 # Contents
-
-- [Why `pysh-db`?](#why-pysh-db)
 - [What is Included in `pysh-db`?](#what-is-included-in-pysh-db)
   - [Python](#python)
   - [Alpine (OS)](#alpine-os)
@@ -41,10 +43,6 @@ The `pysh-db` image is intended to jump start someone's efforts in using Python 
 - [Issues](#issues)
 - [Contributing](#contributing)
 - [References](#references)
-
-# Why `pysh-db`?
-
-This can be valuable for individuals or teams who do not have the time or interest setup up their own development environments. Also, they may have limitations around what they can or cannot install on their corporate laptop. It can be tricky to get all the software packages installed and compiled. Leveraging a Docker image that does that for them can help increase velocity by allowing them time to focus on working with data, not system administration activities.
 
 # What is Included in `pysh-db`?
 
