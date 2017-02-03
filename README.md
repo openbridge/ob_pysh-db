@@ -39,6 +39,7 @@ This can be valuable for individuals or teams who do not have the time or intere
   - [Export Without Using `UNLOAD` command](#export-without-using-unload-command)
 - [Connecting Python To Your Database](#connecting-python-to-your-database)
   - [Example: Basic `psycopg2` Usage](#example-basic-psycopg2-usage)
+- [Redshift Test Script Using Python `psycopg2`](#redshift-test-script-using-python-psycopg2)
 - [Issues](#issues)
 - [Contributing](#contributing)
 - [References](#references)
@@ -463,6 +464,34 @@ cursor.execute('select * from customer WHERE purchases < 70000')
 for query in cursor:
     print str(query)
 ```
+
+# Redshift Test Script Using Python `psycopg2`
+
+We have included a test script called `redshift_test.py`. This test script performs a very simple operation; it will connect to Redshift and print the tables associated with your connection details.
+
+## Usage
+This script uses `psycopg2` and `argparse`. These are included in `pysh-db`. If you are running them outside of Docker, you might need to run `pip install psycopg2 argparse -U`. This assumes you have `pip` installed. Don't have it? Get it here: https://pip.pypa.io/en/stable/installing/
+
+To connect, you need to pass the connection details as arguments to the script as follows:
+
+```bash
+python redshift_test.py -h <host> -p <port>  -u <user> -x <password> -d <database>
+```
+
+Here is an example of passing sample arguments to Python. Replace with your own details:
+
+```bash
+python /local/path/to/wherever/youhave/redshift_test.py -h my.redshift.hostname.com -p 5439 -u myusername -x myawesomepass -d mydatabasename
+```
+
+Here is the same example using Docker:
+
+```bash
+docker run -it -v ~/Downloads/redshift_test.py:/redshift_test.py openbridge/ob_pysh-db python /redshift_test.py -h my.redshift.hostname.com -p 5439 -u myusername -x myawesomepass -d mydatabasename
+```
+Notice you mounted the script from the local machine in the Downloads directory to the root of the container: `-v ~/Downloads/redshift_test.py:/redshift_test.py`
+
+This places the script inside the container and then you can run it just like you would normally.
 
 # Issues
 
