@@ -8,58 +8,37 @@ The `pysh-db` image is intended to jump start someone's efforts in using Python 
 
 - [Why `pysh-db`?](#why-pysh-db)
 - [What is Included in `pysh-db`?](#what-is-included-in-pysh-db)
-
   - [Python](#python)
   - [Alpine (OS)](#alpine-os)
-
 - [Requirements](#requirements)
-
   - [What is Docker?](#what-is-docker)
   - [Install Docker](#install-docker)
   - [Data and Work File Persistence](#data-and-work-file-persistence)
-
     - [Example: Mounting Host Volume](#example-mounting-host-volume)
-
   - [Creating Your Own Custom Image](#creating-your-own-custom-image)
-
 - [Getting Setup](#getting-setup)
-
   - [Step 1: Building an image](#step-1-building-an-image)
   - [Step2: Running The Container](#step2-running-the-container)
   - [Step 3: Getting Your Local Database setup](#step-3-getting-your-local-database-setup)
-
     - [Postgres and Amazon Aurora (Postgres)](#postgres-and-amazon-aurora-postgres)
     - [MySQL, MariaDB and Amazon Aurora (MySQL)](#mysql-mariadb-and-amazon-aurora-mysql)
-
       - [Amazon Aurora](#amazon-aurora)
-
 - [Connecting to Postgres, Amazon Auroa or Redshift](#connecting-to-postgres-amazon-auroa-or-redshift)
-
   - [Connecting With `psql`](#connecting-with-psql)
-
     - [Example: Listing Schema Tables And Objects](#example-listing-schema-tables-and-objects)
-
   - [Running Queries Via `psql`](#running-queries-via-psql)
-
     - [Standard Input Via `-c`](#standard-input-via-c)
     - [File Input Via `-f`](#file-input-via-f)
-
 - [Connecting to MySQL, MariaDB or Amazon Aurora](#connecting-to-mysql-mariadb-or-amazon-aurora)
-
   - [Connecting With `mysql`](#connecting-with-mysql)
   - [Running Queries Via `mysql`](#running-queries-via-mysql)
-
 - [Exporting Data From Your Database](#exporting-data-from-your-database)
-
   - [Export CSV from Redshift via `UNLOAD` and `psql`](#export-csv-from-redshift-via-unload-and-psql)
   - [Export Without Using `UNLOAD` command](#export-without-using-unload-command)
-
 - [Connecting Python To Your Database](#connecting-python-to-your-database)
-
   - [Example: Basic `psycopg2` Usage](#example-basic-psycopg2-usage)
-
+- [Redshift Test Script Using Python `psycopg2`](#redshift-test-script-using-python-psycopg2)
 - [Issues](#issues)
-
 - [Contributing](#contributing)
 - [References](#references)
 
@@ -487,6 +466,34 @@ cursor.execute('select * from customer WHERE purchases < 70000')
 for query in cursor:
     print str(query)
 ```
+
+# Redshift Test Script Using Python `psycopg2`
+
+We have included a test script called `redshift_test.py`. This test script performs a very simple operation; it will connect to Redshift and print the tables associated with your connection details.
+
+## Usage
+This script uses `psycopg2` and `argparse`. These are included in `pysh-db`. If you are running them outside of Docker, you might need to run `pip install psycopg2 argparse -U`. This assumes you have `pip` installed. Don't have it? Get it here: https://pip.pypa.io/en/stable/installing/
+
+To connect, you need to pass the connection details as arguments to the script as follows:
+
+```bash
+python redshift_test.py -h <host> -p <port>  -u <user> -x <password> -d <database>
+```
+
+Here is an example of passing sample arguments to Python. Replace with your own details:
+
+```bash
+python /local/path/to/wherever/youhave/redshift_test.py -h my.redshift.hostname.com -p 5439 -u myusername -x myawesomepass -d mydatabasename
+```
+
+Here is the same example using Docker:
+
+```bash
+docker run -it -v ~/Downloads/redshift_test.py:/redshift_test.py openbridge/ob_pysh-db python /redshift_test.py -h my.redshift.hostname.com -p 5439 -u myusername -x myawesomepass -d mydatabasename
+```
+Notice you mounted the script from the local machine in the Downloads directory to the root of the container: `-v ~/Downloads/redshift_test.py:/redshift_test.py`
+
+This places the script inside the container and then you can run it just like you would normally.
 
 # Issues
 
