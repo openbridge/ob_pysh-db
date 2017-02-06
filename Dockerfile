@@ -39,7 +39,7 @@ RUN echo "@community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /et
     && update-ca-certificates \
     && curl -fSL https://s3.amazonaws.com/redshift-downloads/redshift-ssl-ca-cert.pem > /redshift-ssl-ca-cert.pem \
     && curl -fSL 'https://bootstrap.pypa.io/get-pip.py' | python \
-    && pip install --no-cache-dir setuptools cffi psycopg2 cryptography numpy matplotlib pandas python-dateutil pytz six wsgiref scipy sqlalchemy mysql-connector boto awscli seaborn statsmodels \
+    && pip install --no-cache-dir setuptools cffi psycopg2 cryptography numpy matplotlib pandas python-dateutil pytz six wsgiref scipy sqlalchemy mysql-connector boto awscli seaborn statsmodels jupyter \
     && find /usr/local -depth \
         \( \
             \( -type d -a -name test -o -name tests \) \
