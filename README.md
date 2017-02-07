@@ -15,9 +15,6 @@ This can be valuable for individuals or teams who do not have the time or intere
 - [Requirements](#requirements)
   - [What is Docker?](#what-is-docker)
   - [Install Docker](#install-docker)
-  - [Data and Work File Persistence](#data-and-work-file-persistence)
-    - [Example: Mounting Host Volume](#example-mounting-host-volume)
-  - [Creating Your Own Custom Image](#creating-your-own-custom-image)
 - [Getting Setup](#getting-setup)
   - [Step 1: Building an image](#step-1-building-an-image)
   - [Step2: Running The Container](#step2-running-the-container)
@@ -40,6 +37,9 @@ This can be valuable for individuals or teams who do not have the time or intere
 - [Connecting Python To Your Database](#connecting-python-to-your-database)
   - [Example: Basic `psycopg2` Usage](#example-basic-psycopg2-usage)
 - [Redshift Test Script Using Python `psycopg2`](#redshift-test-script-using-python-psycopg2)
+- [Data and Work File Persistence](#data-and-work-file-persistence)
+  - [Example: Mounting Host Volume](#example-mounting-host-volume)
+- [Creating Your Own Custom Image](#creating-your-own-custom-image)
 - [Issues](#issues)
 - [Contributing](#contributing)
 - [References](#references)
@@ -114,42 +114,6 @@ If you already have a Linux instance running as a host or VM, you can install Do
 
 At this point, you should have Docker installed. Now you can get your Python and Postgres services up and running
 
-## Data and Work File Persistence
-
-You may have noticed that once you stop the container, if you previously wrote some data on the DB or some Python script, that data is lost. This is because by default Docker containers are not persistent. We can resolve this problem using a data container. Read about how to persist data: <https://docs.docker.com/engine/tutorials/dockervolumes/>
-
-### Example: Mounting Host Volume
-
-Here is a quick example of mounting a host drive/directory via `VOLUMES`. Note the use of the `-v` command below. This signifies the host volume to be mounted.
-
-In this example, your python app files are located locally at `/src/app`. So you want to make that available to your container. You end up mounting this to `/app` inside the container. This makes available your Python (or anything else) located in `/src/app` to the container.
-
-Let's assume you have a `query.py` script you have worked on. The path to that file on the host would be `/src/app/query.py`. By mounting `/src/app` to `/app`, this will make available `query.py` within the container with a path of `/src/app/query.py`. To run `query.py` the docker command would look like:
-
-```bash
-docker run -it -v /src/app:/app openbridge/ob_pysh-db python /app/query.py
-```
-
-Per Docker:
-
-_The -v command mounts the host directory, /src/app, into the container at /app. If the path /app already exists inside the container's image, the /src/app mount overlays but does not remove the pre-existing content. Once the mount is removed, the content is accessible again. This is consistent with the expected behavior of the mount command._
-
-## Creating Your Own Custom Image
-
-To persist configurations different than what is in the current Dockerfile, it is best to create your own "docker image". This is done via a custom [Dockerfile](https://docs.docker.com/engine/reference/builder/). You can use this Dockerfile to create a custom image for dev purposes. What you name your image is up to you.
-
-```
-docker build -t python-dbdev .
-```
-
-Or
-
-```
-docker build -t python-my-db-tools .
-```
-
-Feel free to modify the Dockerfile as deemed appropriate. You can add and subtract default packages to fit your use case. There are a large number of choices available relating to versions and operating systems. You can see a complete list here: <https://hub.docker.com/_/python/>
-
 # Getting Setup
 
 Once you have Docker running, you can build a Python image and run the container..
@@ -170,7 +134,7 @@ docker build -t openbridge/ob_pysh-db .
 
 Due to the Python packages, the build can take awhile. Pandas, Numpy and Scipy take considerable time to build. When you run the `docker build` command, feel free to grab a cup of coffee.
 
-## Step2: Running The Container
+## Step 2: Running The Container
 
 Once you have completed building your image, you can run through some basic checks to make sure it is working as expected. For example, you can test if you can start the bash cli:
 
@@ -492,6 +456,43 @@ docker run -it -v ~/Downloads/redshift_test.py:/redshift_test.py openbridge/ob_p
 Notice you mounted the script from the local machine in the Downloads directory to the root of the container: `-v ~/Downloads/redshift_test.py:/redshift_test.py`
 
 This places the script inside the container and then you can run it just like you would normally.
+
+# Data and Work File Persistence
+
+You may have noticed that once you stop the container, if you previously wrote some data on the DB or some Python script, that data is lost. This is because by default Docker containers are not persistent. We can resolve this problem using a data container. Read about how to persist data: <https://docs.docker.com/engine/tutorials/dockervolumes/>
+
+## Example: Mounting Host Volume
+
+Here is a quick example of mounting a host drive/directory via `VOLUMES`. Note the use of the `-v` command below. This signifies the host volume to be mounted.
+
+In this example, your python app files are located locally at `/src/app`. So you want to make that available to your container. You end up mounting this to `/app` inside the container. This makes available your Python (or anything else) located in `/src/app` to the container.
+
+Let's assume you have a `query.py` script you have worked on. The path to that file on the host would be `/src/app/query.py`. By mounting `/src/app` to `/app`, this will make available `query.py` within the container with a path of `/src/app/query.py`. To run `query.py` the docker command would look like:
+
+```bash
+docker run -it -v /src/app:/app openbridge/ob_pysh-db python /app/query.py
+```
+
+Per Docker:
+
+_The -v command mounts the host directory, /src/app, into the container at /app. If the path /app already exists inside the container's image, the /src/app mount overlays but does not remove the pre-existing content. Once the mount is removed, the content is accessible again. This is consistent with the expected behavior of the mount command._
+
+# Creating Your Own Custom Image
+
+To persist configurations different than what is in the current Dockerfile, it is best to create your own "docker image". This is done via a custom [Dockerfile](https://docs.docker.com/engine/reference/builder/). You can use this Dockerfile to create a custom image for dev purposes. What you name your image is up to you.
+
+```
+docker build -t python-dbdev .
+```
+
+Or
+
+```
+docker build -t python-my-db-tools .
+```
+
+Feel free to modify the Dockerfile as deemed appropriate. You can add and subtract default packages to fit your use case. There are a large number of choices available relating to versions and operating systems. You can see a complete list here: <https://hub.docker.com/_/python/>
+
 
 # Issues
 
