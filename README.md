@@ -457,6 +457,15 @@ Notice you mounted the script from the local machine in the Downloads directory 
 
 This places the script inside the container and then you can run it just like you would normally.
 
+Here is a sample of running a query in Redshift to list all tables in a given schema:
+
+```sql
+SELECT DISTINCT tablename
+FROM pg_table_def
+WHERE schemaname = 'yourschemanamehere'
+ORDER BY tablename;
+```
+
 # Data and Work File Persistence
 
 You may have noticed that once you stop the container, if you previously wrote some data on the DB or some Python script, that data is lost. This is because by default Docker containers are not persistent. We can resolve this problem using a data container. Read about how to persist data: <https://docs.docker.com/engine/tutorials/dockervolumes/>
