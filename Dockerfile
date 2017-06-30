@@ -1,4 +1,5 @@
-FROM alpine:3.5
+FROM alpine:3.6
+MAINTAINER Thomas Spicer <thomas@openbridge.com>
 
 ENV LANG C.UTF-8
 
@@ -6,7 +7,6 @@ ENV PY_DEPS \
       curl \
       pkgconfig \
       freetype-dev \
-      py-numpy-dev@community \
       openblas-dev \
       ca-certificates \
       bzip2-dev \
@@ -17,7 +17,6 @@ ENV PY_DEPS \
       linux-headers \
       musl-dev \
       python-dev \
-      libgfortran \
       cmake \
       g++ \
       gfortran \
@@ -30,6 +29,7 @@ ENV PY_DEPS \
       tk-dev \
       zlib-dev \
       mariadb-common \
+      py-numpy-dev@community \
       mariadb-dev \
       postgresql-dev
 RUN echo "@community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
@@ -38,27 +38,23 @@ RUN echo "@community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /et
        $PY_DEPS \
     && update-ca-certificates \
     && curl -fSL https://s3.amazonaws.com/redshift-downloads/redshift-ssl-ca-cert.pem > /redshift-ssl-ca-cert.pem \
-    && curl -fSL 'https://bootstrap.pypa.io/get-pip.py' | python \
-    && pip install --no-cache-dir setuptools cffi psycopg2 cryptography numpy matplotlib pandas python-dateutil pytz six wsgiref scipy sqlalchemy mysql-connector boto awscli seaborn statsmodels jupyter \
-    && find /usr/local -depth \
-        \( \
-            \( -type d -a -name test -o -name tests \) \
-            -o \
-            \( -type f -a -name '*.pyc' -o -name '*.pyo' \) \
-        \) -exec rm -rf '{}' + \
     && apk add --update --virtual .python-deps \
         postgresql-client \
         mariadb-client \
         mariadb-client-libs \
-        python \
+        py-pip@community \
+        libgfortran \
+        python@community \
         bash \
         curl \
         less \
         groff \
         jq \
-        py-numpy \
+        py-numpy-f2py@community \
+        py-numpy@community \
         freetype \
         libpng \
+    && pip install --no-cache-dir awscli setuptools cffi psycopg2 cryptography matplotlib pandas python-dateutil pytz six wsgiref scipy \
     && mkdir /root/.aws \
     && rm -rf /usr/src/python ~/.cache \
     && rm -Rf /tmp/* \
