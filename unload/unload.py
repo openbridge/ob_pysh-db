@@ -76,7 +76,7 @@ if __name__ == '__main__':
     parser.add_argument('-r1', help='Range start')
     parser.add_argument('-r2', help='Range end')
     raw_args = parser.parse_args() 
-    if 's' in vars(raw_args):
+    if 's' in vars(raw_args) and raw_args.s:
         with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), raw_args.s), 'r') as f:
             raw_args.s = f.read()
     args = {}
