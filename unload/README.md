@@ -1,7 +1,7 @@
 # Unload
 This script is meant to simplify running a [Redshift UNLOAD command](http://docs.aws.amazon.com/redshift/latest/dg/r_UNLOAD.html). The script automatically retrieves and adds headers to the file before output.
 
-##
+## Requirements
 The only package required to run this script is [psycopg2](http://initd.org/psycopg/docs/install.html).
 
 ## Configuration file
