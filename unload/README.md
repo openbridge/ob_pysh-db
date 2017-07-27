@@ -47,5 +47,5 @@ As mentioned previously, it is possible to supply your own WHERE clause to be us
 
 Note that this is the WHERE clause **only**. For example, to use this functionality to UNLOAD only new users, the SQL file will contain ``WHERE is_new = true``.
 
-Note: It may be wise to create a read-only user on the database for the bot to use. This will improve the security of the bot by disallowing any custom queries which would make changes to the database. For more information on how to do this, check the manual for your database type.
+Note: It may be wise to create a read-only user on the database for the script to use. This will improve the security of the script by further protecting against SQL injection. For more information on how to do this, check the manual for your database type.
 
