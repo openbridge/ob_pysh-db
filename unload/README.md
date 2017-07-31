@@ -42,7 +42,7 @@ Note:  ``-s`` and ``-d`` are mutually exlusive and cannot be used together. If n
 ## Examples
 This command will unload the data in the table ``mytable`` which the ``datecol`` is between to the specified S3 location.
 ```
-python unload.py -t mytable -f s3://dest-bucket/foo/bar/output_file.csv -d datecol -d1 2017-01-01 -d2 2017-06-01
+python unload.py -t mytable -f s3://dest-bucket/foo/bar/output_file.csv -r datecol -r1 2017-01-01 -r2 2017-06-01
 ```
 
 ## Optional WHERE clause
