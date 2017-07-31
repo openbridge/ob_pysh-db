@@ -40,7 +40,7 @@ def run(config, tablename, file_path, sql_file=None, range_col=None, range_start
     cursor = conn.cursor()
     where_clause = ""
     if range_col and range_start and range_end:
-        where_clause = cursor.mogrify("WHERE %s BETWEEN %s AND %s", range_col, range_start, range_end)
+        where_clause = cursor.mogrify("WHERE %s BETWEEN %s AND %s", (range_col, range_start, range_end,))
     elif sql_file:
         where_clause = sql_file
     query = """
