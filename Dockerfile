@@ -59,5 +59,5 @@ RUN echo "@community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /et
     && rm -rf /usr/src/python ~/.cache \
     && rm -Rf /tmp/* \
     && apk del .build-deps
-
+COPY unload/ /unload/
 CMD ["python2"]
