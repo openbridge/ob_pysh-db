@@ -40,28 +40,24 @@ def run(config, tablename, file_path, sql_file=None, range_col=None, range_start
     cursor = conn.cursor()
     where_clause = ""
     if range_col and range_start and range_end:
-        where_clause = cursor.mogrify("WHERE %s BETWEEN %s AND %s", (range_col, range_start, range_end,))
+        where_clause = cursor.mogrify("WHERE {} BETWEEN \\\'{}\\\' AND \\\'{}\\\'".format(range_col, range_start, range_end,))
     elif sql_file:
         where_clause = sql_file
     query = """
     UNLOAD (\'SELECT {0} FROM (
-        SELECT 1 as i, {1} 
+        SELECT 1 as rn, {1} 
         UNION ALL
-        (SELECT 2 as i, {2} 
-        FROM {3} {4})) ORDER BY i\')  
+        (SELECT 2 as rn, {2} 
+        FROM {3} {4})) ORDER BY rn\')  
     TO \'{7}\'
     CREDENTIALS 'aws_access_key_id={5};aws_secret_access_key={6}'
     {8}
     """.format(column_str, header_str, cast_columns_str, tablename, 
                where_clause, config['aws_access_key_id'], 
                config['aws_secret_access_key'], file_path, unload_options)
-    print "The following UNLOAD query will be run: \n" + query
-    confirmation = raw_input("\nContinue? (y/n)")
-    if confirmation != 'y':
-        print 'Exiting.'
-    else:
-        cursor.execute(query)
-        print 'Completed write to {}'.format(file_path)
+    print "The following UNLOAD query is being run: \n" + query    
+    cursor.execute(query)
+    print 'Completed write to {}'.format(file_path)
 
 if __name__ == '__main__':
     config_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.json')
