@@ -7,5 +7,12 @@
         "password": "XXXXXXXXXXXXXXXXXXXXXXX"
     },
     "aws_access_key_id": "XXXXXXXXXXXXXXXXXXXXXXX",
-    "aws_secret_access_key": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    "aws_secret_access_key": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "unload_options": [
+    	"ADDQUOTES",
+    	"PARALLEL OFF",
+    	"ALLOWOVERWRITE",
+    	"GZIP",
+    	"DELIMITER ','"
+    ]
 }
