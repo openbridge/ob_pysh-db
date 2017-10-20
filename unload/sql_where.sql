@@ -1,1 +1,0 @@
-userid in (select distinct userid from sanofi_pasteur_master_082817 where sitedomain ilike '%flu%')
