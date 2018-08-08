@@ -41,9 +41,9 @@ RUN apk update \
         postgresql-client \
         mariadb-client \
         mariadb-client-libs \
-        py-pip@community \
+        py-pip \
         libgfortran \
-        python@community \
+        python \
         bash \
         curl \
         less \
