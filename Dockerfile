@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM alpine:3.7
 MAINTAINER Thomas Spicer <thomas@openbridge.com>
 
 ENV LANG C.UTF-8
@@ -41,6 +41,7 @@ RUN apk update \
         postgresql-client \
         mariadb-client \
         mariadb-client-libs \
+        mariadb-common \
         py-pip \
         libgfortran \
         python \
