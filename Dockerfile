@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM alpine:3.7
 MAINTAINER Thomas Spicer <thomas@openbridge.com>
 
 ENV LANG C.UTF-8
@@ -29,11 +29,10 @@ ENV PY_DEPS \
       tk-dev \
       zlib-dev \
       mariadb-common \
-      py-numpy-dev@community \
+      py-numpy-dev \
       mariadb-dev \
       postgresql-dev
-RUN echo "@community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
-    && apk update \
+RUN apk update \
     && apk add --update --no-cache --virtual .build-deps \
        $PY_DEPS \
     && update-ca-certificates \
@@ -42,16 +41,17 @@ RUN echo "@community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /et
         postgresql-client \
         mariadb-client \
         mariadb-client-libs \
-        py-pip@community \
+        mariadb-common \
+        py-pip \
         libgfortran \
-        python@community \
+        python \
         bash \
         curl \
         less \
         groff \
         jq \
-        py-numpy-f2py@community \
-        py-numpy@community \
+        py-numpy-f2py \
+        py-numpy \
         freetype \
         libpng \
     && pip install --no-cache-dir awscli setuptools cffi psycopg2 cryptography matplotlib pandas python-dateutil pytz six wsgiref scipy \
