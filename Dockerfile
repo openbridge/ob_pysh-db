@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.8
 MAINTAINER Thomas Spicer <thomas@openbridge.com>
 
 ENV LANG C.UTF-8
@@ -40,7 +40,6 @@ RUN apk update \
     && apk add --update --virtual .python-deps \
         postgresql-client \
         mariadb-client \
-        mariadb-client-libs \
         mariadb-common \
         py-pip \
         libgfortran \
@@ -54,7 +53,7 @@ RUN apk update \
         py-numpy \
         freetype \
         libpng \
-    && pip install --no-cache-dir awscli setuptools cffi psycopg2 cryptography matplotlib pandas python-dateutil pytz six wsgiref scipy \
+    && pip install --no-cache-dir awscli setuptools cffi psycopg2 cryptography matplotlib pandas csvkit python-dateutil pytz six wsgiref scipy \
     && mkdir /root/.aws \
     && rm -rf /usr/src/python ~/.cache \
     && rm -Rf /tmp/* \
