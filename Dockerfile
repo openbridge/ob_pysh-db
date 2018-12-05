@@ -53,7 +53,7 @@ RUN apk update \
         py-numpy \
         freetype \
         libpng \
-    && pip install --no-cache-dir awscli setuptools cffi psycopg2 cryptography matplotlib pandas csvkit python-dateutil pytz six wsgiref scipy \
+    && pip install --no-cache-dir awscli setuptools cffi==1.11.5 cryptography==2.3.1 psycopg2 matplotlib pandas csvkit python-dateutil pytz six wsgiref scipy \
     && mkdir /root/.aws \
     && rm -rf /usr/src/python ~/.cache \
     && rm -Rf /tmp/* \

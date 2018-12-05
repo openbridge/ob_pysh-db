@@ -78,7 +78,7 @@ Why include these? The two primary reasons for including these packages are;
 
 To install the Postgres library for Python we run the `pip install psycopg2 .... -U` command as part of the image build. The `-U` tells pip to upgrade it if it is already installed.
 
-## Alpine (OS) 3.7
+## Alpine (OS)
 
 The included image uses Alpine Linux as the base container OS. This images leverages `alpine:edge` which is the latest release available. In addition to the Python packages, the Alpine `postgres-client` and `mariadb-client` libraries are installed. Without `postgres-client` installed the `psycopg2` package would not work. It also provides the ability to use the Postgres or MySQL command line tools `psql` and `mysql`. More examples on this later.
 
